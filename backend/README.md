@@ -9,4 +9,10 @@ pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
+<<<<<<< HEAD
 API demo saat ini memakai data in-memory agar alur hackathon dapat diuji tanpa kredensial. Tahap berikutnya adalah mengganti repository in-memory dengan Supabase PostgreSQL dan menambahkan autentikasi.
+=======
+API membaca produk dan supplier dari tabel `products` dan `suppliers` di Supabase. Perubahan inventaris disimpan ke `products.current_stock` dan dicatat di `inventory_transactions`.
+
+Pastikan `backend/.env` berisi `SUPABASE_URL` dan `SUPABASE_KEY`. Key hanya digunakan backend dan tidak boleh diberi awalan `NEXT_PUBLIC_` atau dikirim ke browser. Install dependency dengan `pip install -r requirements.txt`, lalu jalankan API dari folder `backend` seperti perintah di atas.
+>>>>>>> origin/master
