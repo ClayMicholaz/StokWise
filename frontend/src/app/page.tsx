@@ -1,12 +1,8 @@
 "use client";
 
-<<<<<<< HEAD
-import { useMemo, useState } from "react";
-=======
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type FormEvent, useEffect, useMemo, useState, useSyncExternalStore } from "react";
->>>>>>> origin/master
 
 type Product = {
   id: string;
@@ -23,95 +19,6 @@ type Product = {
   color: string;
 };
 
-<<<<<<< HEAD
-const initialProducts: Product[] = [
-  {
-    id: "prod-1",
-    name: "Minyak Goreng 2L",
-    category: "Bahan pokok",
-    unit: "botol",
-    current_stock: 20,
-    minimum_stock: 30,
-    average_daily_sales: 8,
-    unit_cost: 31500,
-    trend: 30,
-    days_until_stockout: 2.5,
-    status: "critical",
-    color: "yellow",
-  },
-  {
-    id: "prod-2",
-    name: "Beras Premium 5kg",
-    category: "Bahan pokok",
-    unit: "karung",
-    current_stock: 64,
-    minimum_stock: 25,
-    average_daily_sales: 5.2,
-    unit_cost: 76000,
-    trend: 8,
-    days_until_stockout: 12.3,
-    status: "healthy",
-    color: "green",
-  },
-  {
-    id: "prod-3",
-    name: "Gula Pasir 1kg",
-    category: "Bahan pokok",
-    unit: "pak",
-    current_stock: 12,
-    minimum_stock: 20,
-    average_daily_sales: 4,
-    unit_cost: 17500,
-    trend: -4,
-    days_until_stockout: 3,
-    status: "critical",
-    color: "red",
-  },
-  {
-    id: "prod-4",
-    name: "Kopi Arabika 250g",
-    category: "Minuman",
-    unit: "pak",
-    current_stock: 38,
-    minimum_stock: 18,
-    average_daily_sales: 2.1,
-    unit_cost: 48000,
-    trend: 15,
-    days_until_stockout: 18.1,
-    status: "healthy",
-    color: "blue",
-  },
-];
-const suppliers = [
-  {
-    name: "Sumber Makmur",
-    distance: "2,1 km",
-    price: "Rp30.500",
-    rating: "4,8",
-    delivery: "Hari ini",
-  },
-  {
-    name: "Pasar Grosir Jaya",
-    distance: "4,7 km",
-    price: "Rp29.800",
-    rating: "4,5",
-    delivery: "Besok",
-  },
-  {
-    name: "Kopi Kita Supply",
-    distance: "3,4 km",
-    price: "Rp45.500",
-    rating: "4,9",
-    delivery: "Hari ini",
-  },
-];
-const rupiah = (value: number) => `Rp${value.toLocaleString("id-ID")}`;
-
-export default function Home() {
-  const [products, setProducts] = useState(initialProducts);
-  const [activeView, setActiveView] = useState("Ringkasan");
-  const [toast, setToast] = useState("");
-=======
 type Supplier = {
   id: string;
   name: string;
@@ -174,7 +81,6 @@ export default function Home() {
     () => localStorage.getItem("stokwise.restockAlerts") !== "false",
     () => true,
   );
->>>>>>> origin/master
   const criticalCount = products.filter(
     (product) => product.status === "critical",
   ).length;
@@ -186,32 +92,6 @@ export default function Home() {
     () => products.filter((product) => product.status !== "healthy"),
     [products],
   );
-<<<<<<< HEAD
-
-  function recordSale(productId: string) {
-    setProducts((items) =>
-      items.map((product) => {
-        if (product.id !== productId || product.current_stock === 0)
-          return product;
-        const stock = product.current_stock - 1;
-        const days = product.average_daily_sales
-          ? Number((stock / product.average_daily_sales).toFixed(1))
-          : null;
-        return {
-          ...product,
-          current_stock: stock,
-          days_until_stockout: days,
-          status:
-            days !== null && days <= 3
-              ? "critical"
-              : stock <= product.minimum_stock
-                ? "warning"
-                : "healthy",
-        };
-      }),
-    );
-    setToast("Penjualan dicatat. Status stok diperbarui.");
-=======
   const filteredProducts = useMemo(() => {
     const query = inventoryQuery.trim().toLocaleLowerCase("id-ID");
     return products.filter((product) => {
@@ -349,7 +229,6 @@ export default function Home() {
     localStorage.setItem("stokwise.restockAlerts", String(formData.get("restock_alerts") === "on"));
     window.dispatchEvent(new Event(settingsEvent));
     setToast("Pengaturan berhasil disimpan di perangkat ini.");
->>>>>>> origin/master
     window.setTimeout(() => setToast(""), 2600);
   }
 
@@ -365,22 +244,6 @@ export default function Home() {
         <div className="workspace-switcher">
           <span className="avatar">NA</span>
           <span>
-<<<<<<< HEAD
-            <strong>Nusa Aroma</strong>
-            <small>Warung & Kedai</small>
-          </span>
-          <span className="chevron">⌄</span>
-        </div>
-        <nav className="nav-list" aria-label="Navigasi utama">
-          {["Ringkasan", "Inventaris", "Supplier lokal", "Keuangan"].map(
-            (item, index) => (
-              <button
-                key={item}
-                className={`nav-item ${activeView === item ? "active" : ""}`}
-                onClick={() => setActiveView(item)}
-              >
-                <span className="nav-icon">{["▦", "▤", "⌖", "◌"][index]}</span>
-=======
             <strong>{businessName}</strong>
             <small>Warung & Kedai</small>
           </span>
@@ -398,35 +261,10 @@ export default function Home() {
                 className={`nav-item ${activeView === item ? "active" : ""}`}
               >
                 <span className="nav-icon">{icon}</span>
->>>>>>> origin/master
                 {item}
                 {item === "Inventaris" && criticalCount > 0 && (
                   <span className="nav-badge">{criticalCount}</span>
                 )}
-<<<<<<< HEAD
-              </button>
-            ),
-          )}
-        </nav>
-        <div className="sidebar-bottom">
-          <button className="nav-item">
-            <span className="nav-icon">⚙</span>Pengaturan
-          </button>
-          <div className="help-box">
-            <span className="help-icon">?</span>
-            <div>
-              <strong>Butuh bantuan?</strong>
-              <small>Pelajari cara kerja StokWise</small>
-            </div>
-          </div>
-          <div className="profile">
-            <span className="avatar avatar-small">NA</span>
-            <span>
-              <strong>Nadia A.</strong>
-              <small>Pemilik usaha</small>
-            </span>
-            <span className="more">•••</span>
-=======
               </Link>
           ))}
         </nav>
@@ -447,7 +285,6 @@ export default function Home() {
               <strong>{ownerName}</strong>
               <small>Pemilik usaha</small>
             </span>
->>>>>>> origin/master
           </div>
         </div>
       </aside>
@@ -458,25 +295,6 @@ export default function Home() {
             <span className="brand-accent">wise</span>
           </div>
           <div className="topbar-actions">
-<<<<<<< HEAD
-            <button className="icon-button" aria-label="Bantuan">
-              ?
-            </button>
-            <button className="notification-button" aria-label="Notifikasi">
-              ♧<i />
-            </button>
-            <span className="topbar-date">Senin, 12 Agustus 2024</span>
-          </div>
-        </header>
-        <div className="page-content">
-          <div className="page-heading">
-            <div>
-              <p className="eyebrow">RINGKASAN USAHA</p>
-              <h1>{activeView}</h1>
-              <p className="heading-copy">
-                Pantau stok dan buat keputusan belanja dengan lebih percaya
-                diri.
-=======
             <button className="icon-button" aria-label="Muat ulang data" title="Muat ulang data" onClick={() => setRefreshKey((key) => key + 1)}>
               ↻
             </button>
@@ -514,77 +332,43 @@ export default function Home() {
                 {activeView === "Supplier lokal" && "Temukan mitra pengadaan berdasarkan kategori dan jarak."}
                 {activeView === "Keuangan" && "Pahami nilai modal yang tersimpan dalam persediaan."}
                 {activeView === "Pengaturan" && "Atur identitas usaha dan preferensi pemberitahuan."}
->>>>>>> origin/master
               </p>
             </div>
             <button
               className="primary-button"
-<<<<<<< HEAD
-              onClick={() => recordSale("prod-1")}
-=======
               disabled={products.length === 0}
               onClick={() => {
                 setTransactionProductId(products[0]?.id ?? "");
                 setTransactionOpen(true);
               }}
->>>>>>> origin/master
             >
               <span>＋</span> Catat transaksi
             </button>
           </div>
-<<<<<<< HEAD
-          {activeView !== "Ringkasan" && (
-            <div className="view-notice">
-              <span>◌</span> Tampilan <strong>{activeView}</strong> siap
-              digunakan. Pilih transaksi dari kartu stok untuk memperbarui data.
-            </div>
-          )}
-=======
           {apiError && (
             <div className="view-notice" role="alert">
               {apiError} <button onClick={() => setRefreshKey((key) => key + 1)}>Coba lagi</button>
             </div>
           )}
           {activeView === "Ringkasan" && <>
->>>>>>> origin/master
           <div className="stats-grid">
             <StatCard
               label="Nilai persediaan"
               value={rupiah(inventoryValue)}
-<<<<<<< HEAD
-              note="↑ 12,4%"
-              noteClass="up"
-              detail="dibanding bulan lalu"
-=======
               note=""
               detail="harga modal dari stok saat ini"
->>>>>>> origin/master
             />
             <StatCard
               label="Produk dipantau"
               value={products.length.toString()}
               note=""
-<<<<<<< HEAD
-              detail="4 kategori aktif"
-=======
               detail={`${new Set(products.map((product) => product.category)).size} kategori aktif`}
->>>>>>> origin/master
             />
             <StatCard
               label="Perlu perhatian"
               value={criticalCount.toString().padStart(2, "0")}
               note={criticalCount > 0 ? "Segera restock" : "Semua aman"}
               noteClass="alert"
-<<<<<<< HEAD
-              detail="diprediksi habis ≤ 3 hari"
-            />
-            <StatCard
-              label="Belanja bulan ini"
-              value="Rp8,42 jt"
-              note="↓ 6,8%"
-              noteClass="down"
-              detail="dibanding bulan lalu"
-=======
               detail={`${restockItems.length} produk di bawah batas stok`}
             />
             <StatCard
@@ -592,7 +376,6 @@ export default function Home() {
               value={suppliers.length.toString()}
               note=""
               detail={`${supplierCategories.length} kategori tersedia`}
->>>>>>> origin/master
             />
           </div>
           <div className="main-grid">
@@ -601,10 +384,6 @@ export default function Home() {
                 title="Status inventaris"
                 subtitle="Perubahan stok dan prediksi kebutuhan"
                 action="Lihat semua"
-<<<<<<< HEAD
-              />
-              <div className="inventory-list">
-=======
                 href="/inventaris"
               />
               <div className="inventory-list">
@@ -614,7 +393,6 @@ export default function Home() {
                 {!isLoading && products.length === 0 && !apiError && (
                   <p role="status">Belum ada produk dari backend.</p>
                 )}
->>>>>>> origin/master
                 {products.map((product) => (
                   <div className="inventory-row" key={product.id}>
                     <span className={`product-dot ${product.color}`} />
@@ -643,11 +421,7 @@ export default function Home() {
                         <i
                           className={product.status}
                           style={{
-<<<<<<< HEAD
-                            width: `${Math.min((product.current_stock / (product.minimum_stock * 2)) * 100, 100)}%`,
-=======
                             width: `${Math.min((product.current_stock / Math.max(product.minimum_stock * 2, 1)) * 100, 100)}%`,
->>>>>>> origin/master
                           }}
                         />
                       </div>
@@ -660,12 +434,6 @@ export default function Home() {
                     </div>
                     <button
                       className="row-action"
-<<<<<<< HEAD
-                      title="Catat satu penjualan"
-                      onClick={() => recordSale(product.id)}
-                    >
-                      •••
-=======
                       title={`Catat transaksi ${product.name}`}
                       aria-label={`Catat transaksi ${product.name}`}
                       onClick={() => {
@@ -674,33 +442,12 @@ export default function Home() {
                       }}
                     >
                       ＋
->>>>>>> origin/master
                     </button>
                   </div>
                 ))}
               </div>
             </section>
             <section className="panel insight-panel">
-<<<<<<< HEAD
-              <div className="insight-top">
-                <span className="spark">✦</span>
-                <span>INSIGHT DARI ASISTEN AI</span>
-                <span className="insight-time">Baru saja</span>
-              </div>
-              <h2>
-                Permintaan minyak goreng naik <em>30%</em> minggu ini
-              </h2>
-              <p>
-                Stok diperkirakan habis dalam <strong>2,5 hari</strong>.
-                Pertimbangkan restock 48 botol untuk menjaga persediaan selama
-                satu minggu ke depan.
-              </p>
-              <div className="insight-divider" />
-              <div className="insight-footer">
-                <span className="mini-product">MG</span>
-                <span>Minyak Goreng 2L</span>
-                <button className="text-button">Lihat analisis →</button>
-=======
               <div className="insight-top"><span className="spark">✦</span><span>PEMANTAUAN STOK</span></div>
               <h2>{restockItems[0] ? `${restockItems[0].name} perlu diperiksa` : "Persediaan dalam kondisi baik"}</h2>
               <p>{restockItems[0] ? <>Tersisa <strong>{restockItems[0].current_stock} {restockItems[0].unit}</strong>. {restockItems[0].days_until_stockout === null ? "Stok sudah menyentuh batas minimum." : `Dengan laju penjualan saat ini, stok cukup sekitar ${restockItems[0].days_until_stockout} hari.`}</> : "Belum ada produk yang berada di bawah batas minimum atau prediksi aman."}</p>
@@ -709,68 +456,12 @@ export default function Home() {
                 <span className="mini-product">{restockItems[0]?.name.slice(0, 2).toUpperCase() ?? "OK"}</span>
                 <span>{restockItems[0]?.category ?? "Semua kategori"}</span>
                 <Link href="/inventaris" className="text-button">Lihat stok →</Link>
->>>>>>> origin/master
               </div>
             </section>
           </div>
           <div className="bottom-grid">
             <section className="panel chart-panel">
               <PanelHeading
-<<<<<<< HEAD
-                title="Aktivitas penjualan"
-                subtitle="7 hari terakhir"
-                action="Minggu ini"
-              />
-              <div className="chart">
-                <div className="chart-y">
-                  <span>240</span>
-                  <span>180</span>
-                  <span>120</span>
-                  <span>60</span>
-                  <span>0</span>
-                </div>
-                <div className="chart-area">
-                  <div className="grid-lines">
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                  <svg
-                    viewBox="0 0 600 180"
-                    preserveAspectRatio="none"
-                    aria-label="Grafik aktivitas penjualan"
-                  >
-                    <defs>
-                      <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0" stopColor="#c9e9dc" stopOpacity=".8" />
-                        <stop offset="1" stopColor="#c9e9dc" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M0 132 C35 126, 58 100, 98 111 S145 123, 188 84 S240 98, 275 74 S340 92, 380 54 S430 72, 470 48 S540 54, 600 18 L600 180 L0 180Z"
-                      fill="url(#area)"
-                    />
-                    <path
-                      d="M0 132 C35 126, 58 100, 98 111 S145 123, 188 84 S240 98, 275 74 S340 92, 380 54 S430 72, 470 48 S540 54, 600 18"
-                      fill="none"
-                      stroke="#278c68"
-                      strokeWidth="3"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  </svg>
-                  <div className="chart-x">
-                    <span>Sen</span>
-                    <span>Sel</span>
-                    <span>Rab</span>
-                    <span>Kam</span>
-                    <span>Jum</span>
-                    <span>Sab</span>
-                    <span>Min</span>
-                  </div>
-                </div>
-=======
                 title="Nilai stok per kategori"
                 subtitle="Dihitung dari jumlah barang × harga modal"
               />
@@ -782,7 +473,6 @@ export default function Home() {
                     <div className="meter"><i style={{ width: `${Math.max((value / Math.max(...categoryValues.map(([, total]) => total), 1)) * 100, 3)}%` }} /></div>
                   </div>
                 ))}
->>>>>>> origin/master
               </div>
             </section>
             <section className="panel supplier-panel">
@@ -790,15 +480,10 @@ export default function Home() {
                 title="Supplier rekomendasi"
                 subtitle="Pilihan terdekat untuk restock"
                 action="Cari supplier"
-<<<<<<< HEAD
-              />
-              <div className="supplier-list">
-=======
                 href="/supplier-lokal"
               />
               <div className="supplier-list">
                 {suppliers.length === 0 && <p className="empty-state">Belum ada supplier yang dapat ditampilkan.</p>}
->>>>>>> origin/master
                 {suppliers.map((supplier) => (
                   <div className="supplier-row" key={supplier.name}>
                     <span className="supplier-avatar">
@@ -811,13 +496,6 @@ export default function Home() {
                     <div className="supplier-details">
                       <strong>{supplier.name}</strong>
                       <span>
-<<<<<<< HEAD
-                        ★ {supplier.rating} · {supplier.distance}
-                      </span>
-                    </div>
-                    <div className="supplier-price">
-                      <strong>{supplier.price}</strong>
-=======
                         ★ {supplier.rating.toLocaleString("id-ID")} · {supplier.distance_km.toLocaleString("id-ID")} km
                       </span>
                     </div>
@@ -827,7 +505,6 @@ export default function Home() {
                           ? "Harga belum tersedia"
                           : rupiah(supplier.price)}
                       </strong>
->>>>>>> origin/master
                       <span>{supplier.delivery}</span>
                     </div>
                   </div>
@@ -835,11 +512,7 @@ export default function Home() {
               </div>
             </section>
           </div>
-<<<<<<< HEAD
-          <section className="restock-strip">
-=======
           {restockAlerts && <section className="restock-strip">
->>>>>>> origin/master
             <div className="restock-icon">↗</div>
             <div>
               <strong>
@@ -849,10 +522,6 @@ export default function Home() {
                 Periksa rekomendasi restock agar operasional tetap lancar.
               </span>
             </div>
-<<<<<<< HEAD
-            <button className="dark-button">Buka daftar restock →</button>
-          </section>
-=======
             <Link className="dark-button" href="/inventaris">Buka daftar restock →</Link>
           </section>}
           </>}
@@ -905,15 +574,12 @@ export default function Home() {
               </form>
             </section>
           </div>}
->>>>>>> origin/master
         </div>
       </section>
       {toast && <div className="toast">✓ {toast}</div>}
     </main>
   );
 }
-<<<<<<< HEAD
-=======
 function InventoryPage({
   products,
   query,
@@ -1063,24 +729,16 @@ function SettingsPage({
   );
 }
 
->>>>>>> origin/master
 function PanelHeading({
   title,
   subtitle,
   action,
-<<<<<<< HEAD
-}: {
-  title: string;
-  subtitle: string;
-  action: string;
-=======
   href,
 }: {
   title: string;
   subtitle: string;
   action?: string;
   href?: string;
->>>>>>> origin/master
 }) {
   return (
     <div className="panel-heading">
@@ -1088,13 +746,7 @@ function PanelHeading({
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-<<<<<<< HEAD
-      <button className="ghost-button">
-        {action} <span>→</span>
-      </button>
-=======
       {action && (href ? <Link className="ghost-button" href={href}>{action} <span>→</span></Link> : <span className="section-label">{action}</span>)}
->>>>>>> origin/master
     </div>
   );
 }

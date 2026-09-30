@@ -14,6 +14,7 @@ frontend/.vercel/
 
 # Environment and local files
 frontend/.env*
+backend/.env
 *.pem
 .DS_Store
 
